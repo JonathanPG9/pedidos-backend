@@ -6,18 +6,28 @@ const jwt = require('jsonwebtoken');
 require("dotenv").config();
 const privateRoute = require("../middleware/privateRoute")
 
-router.post("/login",async (req,res) => {
-  const user = await User.findOne({nombre: req.body.nombre})
-  const passwordValidated = await bcrypt.compare(req.body.password, user.password)
-  if(!passwordValidated) return res.status(400).json("Password is not correct")
-  const token = jwt.sign({_id:user.id}, process.env.SECRET,{
-    expiresIn: 60 * 60 * 24 * 10
+router.post("/login",async (req,res,next) => {
+  let usuario;
+  User.findOne({name:req.body.name})
+  .then(user => {
+    usuario = user;
+    return  bcrypt.compare(req.body.password, user.password);
   })
-  res.send({
-    nombre : user.nombre,
-    email : user.email,
-    token
+  .then(passwordValidated => {
+    const token = jwt.sign({_id:usuario.id}, process.env.SECRET,{
+      expiresIn: 60 * 60 * 24 * 10
+    })
+    const existedUser = req.body.nombre === usuario.name;
+    passwordValidated && existedUser ?
+    res.send({
+      nombre : usuario.nombre,
+      email : usuario.email,
+      token
+    })
+    :
+    res.status(400).send("Error en el usuario").end();
   })
+  .catch(err => next(err));
 })
 
 router.post("/register", (req,res,next) => {

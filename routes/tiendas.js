@@ -5,22 +5,21 @@ const User = require("../models/user");
 const privateRoute = require("../middleware/privateRoute");
 
 
-router.post("/",privateRoute, async (req,res,next) => {
-  const user = await User.findById(req.body.userId);
+router.post("/",privateRoute,async (req,res,next) => {
   const nuevaTienda = new Tienda({
     nombre : req.body.nombre,
     origen : req.body.origen,
   });
-  try{
-      const tienda = await nuevaTienda.save();
-      user.tiendas = user.tiendas.concat(tienda);
-      await user.save();
-      res.send(tienda);
-    }
-  catch(err){
-  next(err);
-  }
+  Promise.all([
+    User.findById(req.body.userId),
+    nuevaTienda.save(),
+  ])
+  .then(values => {
+    values[0].tiendas = values[0].tiendas.concat(values[1]);
+    values[0].save();
+  })
+  .then( () => res.status(200).send('Bien').end())
+  .catch(err => next(err))
 })
-
 
 module.exports = router
