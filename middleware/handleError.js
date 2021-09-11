@@ -1,8 +1,12 @@
+const manejoDeErrores = {
+  JsonWebTokenError : (res,error) => res.status(498).send(`${error}`).end(),
+  ValidationError : (res,error) => res.status(401).send(`${error}`).end(),
+  CastError : (res,error) => res.status(400).send(`${error}`).end(),
+  SyntaxError: (res,error) => res.status(498).send(`${error}`).end,
+  default : res => res.status(500).send("Error interno").end()
+}
 module.exports = ((error,req,res,next) => {
-  if(error.name = 'CastError') {
-    res.status(400).send({error : ' ups error nuestro'}).end()
-  }
-  else {
-    res.status(500).end()
-  }
+  console.error(error);
+  const manejador = manejoDeErrores[error.name] || manejoDeErrores["default"]
+  manejador(res,error)
 })

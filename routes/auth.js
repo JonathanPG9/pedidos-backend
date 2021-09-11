@@ -38,7 +38,7 @@ router.post("/register", (req,res,next) => {
     .catch(err => next(err))
 })
 
-router.get("/usuarios",(req,res,next) => {
+router.get("/usuarios",privateRoute,(req,res,next) => {
   User.find().populate('tiendas',{
     nombre: 1,
     origen: 1
@@ -54,9 +54,8 @@ router.get("/usuarios/:id",privateRoute,(req,res,next) => {
   .catch(err => next(err))
 })
 
-router.put("/update/:id",(req,res,next) => {
+router.put("/update/:id",privateRoute,(req,res,next) => {
   const {id} = req.params;
-  console.log("hola");
   const updateUser = {
     nombre: req.body.nombre,
     password: req.body.password,
@@ -66,7 +65,7 @@ router.put("/update/:id",(req,res,next) => {
   .catch(err => next(err))
 })
 
-router.delete("/delete/:id",(req,res,next) => {
+router.delete("/delete/:id",privateRoute,(req,res,next) => {
   const {id} = req.params
   User.findByIdAndRemove(id)
   .then(userRemoved => res.json(userRemoved).end())
