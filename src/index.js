@@ -2,9 +2,9 @@ const express = require("express");
 const app = express();
 const cors = require("cors");
 const morgan = require("morgan")
-require("./mongo.js")
-const handleError = require("./middleware/handleError")
-const notFound = require("./middleware/notFound")
+require("../mongo.js")
+const handleError = require("../middleware/handleError")
+const notFound = require("../middleware/notFound")
 
 app.use(cors({
   origin: ['https://feltymvp.web.app',"https://jonathanpaniagua.com", "http://localhost:3000","http://localhost:19002/", "http://192.168.100.222",
@@ -25,8 +25,8 @@ app.use(morgan("dev"))
 app.use(express.json())
 app.use(express.urlencoded({extended: false}))
 
-const auth = require("./routes/auth")
-const tiendas = require("./routes/tiendas")
+const auth = require("../routes/auth")
+const tiendas = require("../routes/tiendas")
 
 app.use("/api/",auth)
 app.use("/api/tiendas",tiendas)
