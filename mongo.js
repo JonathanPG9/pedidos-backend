@@ -5,5 +5,5 @@ mongoose.connect(process.env.MONGO,{
   useNewUrlParser: true,
   useUnifiedTopology: true
 }).then(() => {
-  console.log("Conectado a la base de dato MongoDB")
+  console.log("Conectado a la base de datos MongoDB")
 }).catch((err) => console.log("Ha ocurrido un error " + err))
