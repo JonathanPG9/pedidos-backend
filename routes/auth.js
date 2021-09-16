@@ -31,6 +31,7 @@ router.post("/login",(req,res,next) => {
 })
 
 router.post("/register", (req,res,next) => {
+  // Registro
   console.log(req.body);
   const hashPassword = bcrypt.hashSync(req.body.password, 8);
   const newUser = new User({
