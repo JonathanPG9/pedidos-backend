@@ -4,8 +4,7 @@ const Tienda = require('../models/tiendas');
 const User = require("../models/user");
 const privateRoute = require("../middleware/privateRoute");
 
-
-router.post("/",privateRoute,async (req,res,next) => {
+router.post("/",privateRoute, (req,res,next) => {
   const nuevaTienda = new Tienda({
     nombre : req.body.nombre,
     origen : req.body.origen,

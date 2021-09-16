@@ -6,10 +6,9 @@ const jwt = require('jsonwebtoken');
 require("dotenv").config();
 const privateRoute = require("../middleware/privateRoute")
 
-router.post("/login",async (req,res,next) => {
+router.post("/login",(req,res,next) => {
   let usuario;
-  User.findOne({name:req.body.name})
-  .then(user => {
+  User.findOne({nombre:req.body.nombre}).then(user => {
     usuario = user;
     return  bcrypt.compare(req.body.password, user.password);
   })
@@ -17,11 +16,12 @@ router.post("/login",async (req,res,next) => {
     const token = jwt.sign({_id:usuario.id}, process.env.SECRET,{
       expiresIn: 60 * 60 * 24 * 10
     })
-    const existedUser = req.body.nombre === usuario.name;
-    passwordValidated && existedUser ?
+    const existedUser = req.body.nombre === usuario.nombre;
+    passwordValidated  && existedUser ?
     res.send({
       nombre : usuario.nombre,
       email : usuario.email,
+      tiendas : usuario.tiendas,
       token
     })
     :
@@ -31,6 +31,7 @@ router.post("/login",async (req,res,next) => {
 })
 
 router.post("/register", (req,res,next) => {
+  console.log(req.body);
   const hashPassword = bcrypt.hashSync(req.body.password, 8);
   const newUser = new User({
     nombre: req.body.nombre,
@@ -64,7 +65,7 @@ router.get("/usuarios/:id",privateRoute,(req,res,next) => {
   .catch(err => next(err))
 })
 
-router.put("/update/:id",privateRoute,(req,res,next) => {
+router.put("/usuarios/:id",privateRoute,(req,res,next) => {
   const {id} = req.params;
   const updateUser = {
     nombre: req.body.nombre,
@@ -75,8 +76,8 @@ router.put("/update/:id",privateRoute,(req,res,next) => {
   .catch(err => next(err))
 })
 
-router.delete("/delete/:id",privateRoute,(req,res,next) => {
-  const {id} = req.params
+router.delete("/usuarios/:id",privateRoute,(req,res,next) => {
+  console.log(id);
   User.findByIdAndRemove(id)
   .then(userRemoved => res.json(userRemoved).end())
   .catch(err => next(err))
