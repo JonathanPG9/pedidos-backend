@@ -50,7 +50,7 @@ router.post("/register", (req,res,next) => {
     .catch(err => next(err))
 })
 
-router.get("/usuarios",privateRoute,(req,res,next) => {
+router.get("/usuarios",(req,res,next) => {
   User.find().populate('tiendas',{
     nombre: 1,
     origen: 1
