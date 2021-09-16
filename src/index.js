@@ -1,7 +1,6 @@
 const express = require("express");
 const app = express();
 const cors = require("cors");
-const morgan = require("morgan")
 require("../mongo.js")
 const handleError = require("../middleware/handleError")
 const notFound = require("../middleware/notFound")
@@ -21,7 +20,6 @@ app.listen(PORT,() => {
 })
 
 app.set("json spaces", 2)
-app.use(morgan("dev")) 
 app.use(express.json())
 app.use(express.urlencoded({extended: false}))
 
