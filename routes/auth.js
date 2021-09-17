@@ -5,8 +5,12 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 require("dotenv").config();
 const privateRoute = require("../middleware/privateRoute")
+const { validationRegister,validationLogin } = require("../modelsJoi/validateData")
 
 router.post("/login",(req,res,next) => {
+  const {error} = validationLogin(req.body) 
+  if(error) return res.status(401).json(error.details[0].message)
+
   let usuario;
   User.findOne({nombre:req.body.nombre}).then(user => {
     usuario = user;
@@ -18,21 +22,26 @@ router.post("/login",(req,res,next) => {
     })
     const existedUser = req.body.nombre === usuario.nombre;
     passwordValidated  && existedUser ?
-    res.send({
+    res.status(200).send({
       nombre : usuario.nombre,
       email : usuario.email,
       tiendas : usuario.tiendas,
+      userId : usuario.id,
       token
     })
     :
-    res.status(400).send("Error en el usuario").end();
+    res.status(400).send("Datos Erroneos").end();
   })
   .catch(err => next(err));
 })
 
 router.post("/register", (req,res,next) => {
+  // Validacion
+  const {error} = validationRegister(req.body) 
+  if(error) return res.status(401).json(error.details[0].message)
+  const existedUser = User.findOne({email:req.body.email})
+  if(existedUser) return res.status(400).send("Error Email registrado")
   // Registro
-  console.log(req.body);
   const hashPassword = bcrypt.hashSync(req.body.password, 8);
   const newUser = new User({
     nombre: req.body.nombre,
@@ -45,12 +54,11 @@ router.post("/register", (req,res,next) => {
     sexo : req.body.sexo
 })
   newUser.save()
-    .then((user) => res.send(user).end()
-    )
+    .then((user) => res.send(user).end())
     .catch(err => next(err))
 })
 
-router.get("/usuarios",privateRoute,(req,res,next) => {
+router.get("/usuarios",(req,res,next) => {
   User.find().populate('tiendas',{
     nombre: 1,
     origen: 1
@@ -59,9 +67,12 @@ router.get("/usuarios",privateRoute,(req,res,next) => {
   .catch(err => next(err))
 })
 
-router.get("/usuarios/:id",privateRoute,(req,res,next) => {
+router.get("/usuarios/:id",(req,res,next) => {
   const {id} = req.params
-  User.findById(id)
+  User.findById(id).populate('tiendas',{
+    nombre: 1,
+    origen: 1
+  })
   .then(user => res.json(user).end())
   .catch(err => next(err))
 })
