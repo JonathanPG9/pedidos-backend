@@ -10,7 +10,7 @@ const { validationRegister,validationLogin } = require("../modelsJoi/validateDat
 router.post("/login",(req,res,next) => {
   const {error} = validationLogin(req.body) 
   if(error) return res.status(401).json(error.details[0].message)
-
+/// Usuario
   let usuario;
   User.findOne({nombre:req.body.nombre}).then(user => {
     usuario = user;
