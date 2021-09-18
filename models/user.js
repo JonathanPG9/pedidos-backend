@@ -28,7 +28,7 @@ const User = mongo.Schema({
       ref : "Tienda"
     }
   ],
-  numero: {
+  telefono: {
     type: Number,
     require: true
   },

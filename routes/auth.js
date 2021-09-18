@@ -51,7 +51,8 @@ router.post("/register", (req,res,next) => {
     edad : req.body.edad,
     favoritos : req.body.favoritos,
     dni : req.body.dni,
-    sexo : req.body.sexo
+    sexo : req.body.sexo,
+    telefono : req.body.telefono
 })
   newUser.save()
     .then((user) => res.send(user).end())

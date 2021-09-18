@@ -44,7 +44,7 @@ const validationRegister = (data) => {
       "number.min": "{{#label}} Tiene que ser mayor de 15 a;os",
       "number.max": "{{#label}} Tiene que ser menor que 100 a;os",
     }),
-    numero: joi.string().min(10).max(10).messages({
+    telefono: joi.string().min(10).max(10).messages({
       "string.empty": "{{#label}} Sin completar!",
       "string.min": "{{#label}} Numero invalido",
       "string.max": "{{#label}} Numero invalido",
