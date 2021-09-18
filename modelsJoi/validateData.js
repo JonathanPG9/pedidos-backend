@@ -3,7 +3,6 @@ const joi = require("joi")
 
 
 const validationRegister = (data) => {
-
   const schema = joi.object({
     nombre: joi.string().min(4).max(25).required().messages({
       "any.required": "{{#label}} Campo requerido",
@@ -51,13 +50,10 @@ const validationRegister = (data) => {
       "string.max": "{{#label}} Numero invalido",
     }),
   })
-
   return schema.validate(data)
-
 }
 
 const validationLogin = (data) => {
-
   const schema = joi.object({
     nombre: joi.string().min(4).max(50).required().messages({
       "any.required": "{{#label}} Campo requerido",
@@ -72,9 +68,7 @@ const validationLogin = (data) => {
       "string.max": "{{#label}} Invalida",
     })
   })
-
   return schema.validate(data)
-
 }
 
 module.exports.validationLogin = validationLogin;
