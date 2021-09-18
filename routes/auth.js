@@ -39,6 +39,10 @@ router.post("/register", (req,res,next) => {
   // Validacion
   const {error} = validationRegister(req.body) 
   if(error) return res.status(401).json(error.details[0].message)
+  const existedUser = User.findOne({email:req.body.email})
+  .then(existe =>  {
+    if(existe) return res.status(400).send("Error Email registrado")
+  })
   // Registro
   const hashPassword = bcrypt.hashSync(req.body.password, 8);
   const newUser = new User({
@@ -52,10 +56,6 @@ router.post("/register", (req,res,next) => {
     sexo : req.body.sexo,
     telefono : req.body.telefono
 })
-
-const existedUser = User.findOne({email:req.body.email})
-if(existedUser) return res.status(400).send("Error Email registrado")
-
   newUser.save()
     .then((user) => res.send(user).end())
     .catch(err => next(err))
