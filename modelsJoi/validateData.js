@@ -10,7 +10,7 @@ const validationRegister = (data) => {
       "string.min": "{{#label}} Invalido",
       "string.max": "Ingrese un {{#label}} mas corto",
     }),
-    apellido: joi.string().min(5).max(50).required().messages({
+    apellido: joi.string().min(3).max(50).required().messages({
       "any.required": "{{#label}} Campo requerido",
       "string.empty": "{{#label}} Sin completar!",
       "string.min": "{{#label}} Invalido",

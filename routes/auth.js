@@ -39,7 +39,7 @@ router.post("/register", (req,res,next) => {
   // Validacion
   const {error} = validationRegister(req.body) 
   if(error) return res.status(401).json(error.details[0].message)
-  const existedUser = User.findOne({email:req.body.email})
+  User.findOne({email:req.body.email})
   .then(existe =>  {
     if(existe) return res.status(400).send("Error Email registrado")
   })
