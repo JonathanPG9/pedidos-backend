@@ -85,6 +85,9 @@ router.put("/usuarios/:id",privateRoute,(req,res,next) => {
   const updateUser = {
     nombre: req.body.nombre,
     password: req.body.password,
+    email:req.body.email,
+    apellido: req.body.apellido,
+    telefono:req.body.telefono,
   }
   User.findByIdAndUpdate(id,updateUser, {new : true})
   .then(userUpdated => res.json(userUpdated).end())
