@@ -12,16 +12,15 @@ router.post("/login",(req,res,next) => {
   if(error) return res.status(401).json(error.details[0].message)
 /// Usuario
   let usuario;
-  User.findOne({nombre:req.body.nombre}).then(user => {
+  User.findOne({email:req.body.email}).then(user => {
     usuario = user;
-    return  bcrypt.compare(req.body.password, user.password);
+    return  bcrypt.compare(req.body.password, usuario.password);
   })
   .then(passwordValidated => {
     const token = jwt.sign({_id:usuario.id}, process.env.SECRET,{
       expiresIn: 60 * 60 * 24 * 10
     })
-    const existedUser = req.body.nombre === usuario.nombre;
-    passwordValidated  && existedUser ?
+    passwordValidated ?
     res.status(200).send({
       nombre : usuario.nombre,
       email : usuario.email,
@@ -30,7 +29,7 @@ router.post("/login",(req,res,next) => {
       token
     })
     :
-    res.status(400).send("Datos Erroneos").end();
+    res.status(404).send("Datos Erroneos").end();
   })
   .catch(err => next(err));
 })
@@ -46,7 +45,7 @@ router.post("/register", (req,res,next) => {
   // Registro
   const hashPassword = bcrypt.hashSync(req.body.password, 8);
   const newUser = new User({
-    nombre: req.body.nombre,
+    nombre: req.body.nombre.toLowerCase(),
     apellido: req.body.apellido,
     email: req.body.email,
     password: hashPassword,

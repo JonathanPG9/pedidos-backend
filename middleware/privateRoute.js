@@ -5,8 +5,10 @@ module.exports = ((req,res,next) => {
   let token = ''
   if(autho && autho.toLocaleLowerCase().startsWith("bearer")) {
     token = autho.substring(7)
-}
+  res.end()
+    }
   const tokenDecoded = jwt.verify(token,process.env.SECRET)
   if(!tokenDecoded) return res.send("te falta acceso")
   next()
+  res.end()
 }) 
