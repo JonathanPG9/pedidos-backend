@@ -7,7 +7,7 @@ const manejoDeErrores = {
   default : res => res.status(500).send("Error interno").end()
 }
 module.exports = ((error,req,res,next) => {
-  console.log(error);
+  console.log(error.name);
   const manejador = manejoDeErrores[error.name] || manejoDeErrores["default"]
   manejador(res,error)
 })

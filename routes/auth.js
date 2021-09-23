@@ -79,24 +79,30 @@ router.get("/usuarios/:id",(req,res,next) => {
   .catch(err => next(err))
 })
 
-router.put("/usuarios/:id",privateRoute,(req,res,next) => {
+router.put("/usuarios/:id",async (req,res) => {
   const {id} = req.params;
   const updateUser = {
     nombre: req.body.nombre,
-    password: req.body.password,
-    email:req.body.email,
+    password: bcrypt.hashSync(req.body.password,8),
+    email: req.body.email,
     apellido: req.body.apellido,
-    telefono:req.body.telefono,
+    telefono: req.body.telefono,
   }
-  User.findByIdAndUpdate(id,updateUser, {new : true})
-  .then(userUpdated => res.json(userUpdated).end())
-  .catch(err => next(err))
+  try{
+    const updated = await User.findByIdAndUpdate(id,updateUser, {new : true})
+    return res.status(200).send(updated).end() 
+  }
+  catch(err) {
+    return res.status(404).send("ID invalido").end()
+  } 
 })
 
 router.delete("/usuarios/:id",privateRoute,(req,res,next) => {
-  console.log(id);
+  const {id} = req.params;
   User.findByIdAndRemove(id)
-  .then(userRemoved => res.json(userRemoved).end())
+  .then(userRemoved => {
+    return res.json(userRemoved).end()
+  })
   .catch(err => next(err))
 })
 

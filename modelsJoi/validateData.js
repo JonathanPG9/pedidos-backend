@@ -68,6 +68,7 @@ const validationLogin = (data) => {
       "any.required": "{{#label}} Campo requerido",
       "string.empty": "{{#label}} Campo requerido",
       "string.min": "{{#label}} Invalido",
+      "string.email": "{{#label}} Invalido",
       "string.max": "Invalido",
     }),
     password: joi.string().min(5).max(50).required().messages({
