@@ -29,7 +29,7 @@ router.post("/login",(req,res,next) => {
       token
     })
     :
-    res.status(404).send("Datos Erroneos").end();
+    res.status(404).send("Email y/o password invalidos").end();
   })
   .catch(err => next(err));
 })
