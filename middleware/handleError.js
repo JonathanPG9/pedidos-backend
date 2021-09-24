@@ -1,7 +1,7 @@
 const manejoDeErrores = {
   JsonWebTokenError : (res,error) => res.status(498).send(`${error}`).end(),
   ValidationError : (res,error) => res.status(401).send(`${error}`).end(),
-  CastError : (res,error) => res.status(400).send(`${error}`).end(),
+  CastError : (res,error) => res.status(400).send(`El usuario no está registrado`).end(),
   SyntaxError: (res,error) => res.status(498).send(`${error}`).end(),
   TypeError : res => res.status(404).send("Datos erroneos").end(),
   default : res => res.status(500).send("Error interno").end()

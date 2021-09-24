@@ -75,10 +75,7 @@ router.get("/usuarios/:id",(req,res,next) => {
     nombre: 1,
     origen: 1
   })
-  .then(user => {
-    if(!user) return res.send("ID Invalido").end()
-    return res.json(user).end()
-  })
+  .then(user => res.json(user).end())
   .catch(err => next(err))
 })
 
