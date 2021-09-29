@@ -4,59 +4,59 @@ const joi = require("joi")
 
 const validationRegister = (data) => {
   const schema = joi.object({
-    nombre: joi.string().min(4).max(25).required().regex((/^[A-Za-z]+$/)).messages({
-      "any.required": "NombreCampo requerido",
-      "string.empty": "NombreCampo requerido",
-      "string.min": "NombreInvalido",
-      "string.max": "Ingrese un Nombremas corto",
-      "object.regex": "Solo se permite letras en el nombre Nombre",
-      "string.pattern.base": "Solo se permite letras en el Nombre"
+    nombre: joi.string().min(3).max(15).required().regex((/^[A-Za-z]+$/)).messages({
+      "any.required": "Campo nombre obligatorio",
+      "string.empty": "Campo nombre obligatorio",
+      "string.min": "El nombre Debe contener un minimo de 3 caracteres",
+      "string.max": "El nombre Debe contener un maximo de 15 caracteres",
+      "object.regex": "Solo se admiten caracteres alfabéticos",
+      "string.pattern.base": "Solo se admiten caracteres alfabéticos"
     }),
-    apellido: joi.string().min(3).max(50).required().regex((/^[A-Za-z]+$/)).messages({
-      "any.required": "Apellido Campo requerido",
-      "string.empty": "Apellido Campo requerido",
-      "string.min": "Apellido Invalido",
-      "string.max": "Ingrese un Apellido mas corto",
-      "object.regex": "Solo se permite letras en el nombre Apellido ",
-      "string.pattern.base": "Solo se permite letras en el Apellido"
+    apellido: joi.string().min(3).max(25).required().regex((/^[A-Za-z]+$/)).messages({
+      "any.required": "Campo Apellido obligatorio",
+      "string.empty": "Campo Apellido obligatorio",
+      "string.min": "El apellido Debe contener un minimo de 3 caracteres",
+      "string.max": "El apellido Debe contener un maximo de 25 caracteres",
+      "object.regex": "Solo se admiten caracteres alfabéticos",
+      "string.pattern.base": "Solo se admiten caracteres alfabéticos"
     }),
-    email: joi.string().min(5).max(50).required().email().messages({
-      "any.required": "Email Campo requerido",
-      "string.empty": "Email Campo requerido",
-      "string.min": "Email Invalido",
-      "string.max": "Ingrese un Email mas corto",
+    email: joi.string().min(8).max(35).required().email().messages({
+      "any.required": "Campo Email obligatorio",
+      "string.empty": "Campo Email obligatorio",
+      "string.min": "El Email Debe contener un minimo de 8 caracteres",
+      "string.max": "El Email Debe contener un maximo de 35 caracteres",
       "string.email" : "Email Formato invalido",
     }),
-    password: joi.string().min(5).max(50).required().messages({
-      "any.required": "Password Campo requerido",
-      "string.empty": "Password Campo requerido",
-      "string.min": "Password Ingrese una contrase;a mas segura",
-      "string.max": "Password Ingrese una contrase;a mas corta",
+    password: joi.string().min(5).max(30).required().messages({
+      "any.required": "Campo Password obligatorio",
+      "string.empty": "Campo Password obligatorio",
+      "string.min": "La Password  Debe contener un minimo de 5 caracteres",
+      "string.max": "La Password  Debe contener un maximo de 30 caracteres",
     }),
-    sexo: joi.string().min(2).max(50).messages({
-      "string.min": "Sexo Campo Invalido",
-      "string.max": "Sexo Campo Invalido",
+    sexo: joi.string().min(2).max(15).messages({
+      "string.min": "Sexo Debe contener un minimo de 5 caracteres",
+      "string.max": "Sexo Debe contener un maximo de 15 caracteres",
     }),
-    dni : joi.string().required().min(8).max(8).regex(/^[0-9]+$/).messages({
-      "any.required": "DNI Campo requerido",
-      "string.empty": "DNI Campo requerido",
-      "string.min": "DNI Dni Invalido",
-      "string.max": "DNI Dni Invalido",
-      "object.regex": "Solo se permite Numeros en el nombre DNI ",
-      "string.pattern.base": "Solo se permite Numeros en el DNI"
+    dni: joi.string().required().min(8).max(8).regex(/^[0-9]+$/).messages({
+      "any.required": "Campo DNI obligatorio",
+      "string.empty": "Campo DNI obligatorio",
+      "string.min": "El DNI Debe contener un minimo de 8 caracteres",
+      "string.max": "El DNI Debe contener un maximo de 8 caracteres",
+      "object.regex": "Solo se admiten caracteres numericos",
+      "string.pattern.base": "Solo se admiten caracteres numericos"
     }),
-    edad: joi.number().min(15).max(100).required().messages({
-      "any.required": "Edad Campo requerido",
-      "number.empty": "Edad Campo requerido",
-      "number.min": "Edad Tiene que ser mayor de 16 a;os",
-      "number.max": "Edad Tiene que ser menor que 100 a;os",
+    edad: joi.number().min(14).max(100).required().messages({
+      "any.required": "Campo Edad obligatorio",
+      "number.empty": "Campo Edad obligatorio",
+      "number.min": "Edad minima 14 a;os",
+      "number.max": "Edad maxima 100 a;os",
     }),
     telefono: joi.string().min(10).max(10).regex(/^[0-9]+$/).messages({
-      "string.empty": "Telefono Campo requerido",
-      "string.min": "Telefono Numero invalido",
-      "string.max": "Telefono Numero invalido",
-      "object.regex": "Solo se permite Numeros en el nombre Telefono ",
-      "string.pattern.base": "Solo se permite Numeros en el Telefono "
+      "string.empty": "Campo Telefono obligatorio",
+      "string.min": "El Telefono Debe contener un maximo de 10 caracteres",
+      "string.max": "El Telefono Debe contener un maximo de 10 caracteres",
+      "object.regex": "Solo se admiten caracteres numericos en el Telefono ",
+      "string.pattern.base": "Solo se admiten caracteres numericos en el Telefono "
     }),
   })
   return schema.validate(data)
@@ -64,18 +64,18 @@ const validationRegister = (data) => {
 
 const validationLogin = (data) => {
   const schema = joi.object({
-    email: joi.string().min(5).max(50).required().email().messages({
-      "any.required": "Email Campo requerido",
-      "string.empty": "Email Campo requerido",
-      "string.min": "Email Invalido",
-      "string.email": "Email Invalido",
-      "string.max": "Invalido",
+    email: joi.string().min(8).max(35).required().email().messages({
+      "any.required": "Campo Email obligatorio",
+      "string.empty": "Campo Email obligatorio",
+      "string.min": "El Email Debe contener un minimo de 8 caracteres",
+      "string.max": "El Email Debe contener un maximo de 35 caracteres",
+      "string.email" : "Email Formato invalido",
     }),
     password: joi.string().min(5).max(50).required().messages({
-      "any.required": "Password Campo requerido",
-      "string.empty": "Password Campo requerido",
-      "string.min": "Password Invalida",
-      "string.max": "Password Invalida",
+      "any.required": "Campo Password obligatorio",
+      "string.empty": "Campo Password obligatorio",
+      "string.min": "El Password  Debe contener un minimo de 5 caracteres",
+      "string.max": "El Password  Debe contener un maximo de 30 caracteres",
     })
   })
   return schema.validate(data)

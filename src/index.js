@@ -15,7 +15,7 @@ require("dotenv").config();
 
 const PORT = process.env.PORT || 3000;
 
-app.listen(PORT,() => {
+const server = app.listen(PORT,() => {
   console.log(`Servidor conectado en ${PORT}`);
 })
 
@@ -30,3 +30,5 @@ app.use("/api/",auth)
 app.use("/api/tiendas",tiendas)
 app.use("*",notFound)
 app.use(handleError)
+
+module.exports = {app,server}

@@ -40,7 +40,7 @@ router.post("/register", (req,res,next) => {
   if(error) return res.status(401).json(error.details[0].message)
   User.findOne({email:req.body.email})
   .then(existe =>  {
-    if(existe) return res.status(400).send("Error Email registrado")
+    if(existe) return res.status(400).json("Error Email registrado")
   })
   // Registro
   const hashPassword = bcrypt.hashSync(req.body.password, 8);
