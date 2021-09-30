@@ -34,10 +34,12 @@ router.post("/login",(req,res,next) => {
   .catch(err => next(err));
 })
 
-router.post("/register", (req,res,next) => {
+router.post("/register", async (req,res,next) => {
   // Validacion
   const {error} = validationRegister(req.body) 
   if(error) return res.status(401).json(error.details[0].message)
+  const emailExisted = await User.findOne({email:req.body.email})
+  if(emailExisted) return res.status(400).send("Error Email registrado").end()
   User.findOne({email:req.body.email})
   .then(existe =>  {
     if(existe) return res.status(400).json("Error Email registrado")
