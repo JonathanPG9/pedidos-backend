@@ -12,7 +12,16 @@ router.post("/login",(req,res,next) => {
   if(error) return res.status(401).json(error.details[0].message)
 /// Usuario
   let usuario;
-  User.findOne({email:req.body.email}).then(user => {
+  User.findOne({email:req.body.email}).populate('tiendas',{
+    nombre : 1,
+    comidas : 1,
+    nombreProductos: 1,
+    descripcion : 1,
+    barrio : 1,
+    categorias : 1,
+    foto:1,
+  })
+  .then(user => {
     usuario = user;
     return  bcrypt.compare(req.body.password, usuario.password);
   })
@@ -64,8 +73,13 @@ router.post("/register", async (req,res,next) => {
 
 router.get("/usuarios",(req,res,next) => {
   User.find().populate('tiendas',{
-    nombre: 1,
-    origen: 1
+    nombre : 1,
+    comidas : 1,
+    nombreProductos: 1,
+    descripcion : 1,
+    barrio : 1,
+    categorias : 1,
+    foto:1,
   })
   .then(users => res.json(users).end())
   .catch(err => next(err))
@@ -74,8 +88,13 @@ router.get("/usuarios",(req,res,next) => {
 router.get("/usuarios/:id",(req,res,next) => {
   const {id} = req.params
   User.findById(id).populate('tiendas',{
-    nombre: 1,
-    origen: 1
+    nombre : 1,
+    comidas : 1,
+    nombreProductos: 1,
+    descripcion : 1,
+    barrio : 1,
+    categorias : 1,
+    foto:1,
   })
   .then(user => res.json(user).end())
   .catch(err => next(err))

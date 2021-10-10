@@ -27,7 +27,7 @@ const auth = require("../routes/auth")
 const tiendas = require("../routes/tiendas")
 
 app.use("/api/",auth)
-app.use("/api/tiendas",tiendas)
+app.use("/api/tiendas/",tiendas)
 app.use("*",notFound)
 app.use(handleError)
 

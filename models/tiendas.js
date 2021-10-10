@@ -5,12 +5,31 @@ const Tienda = mongo.Schema({
     type: String,
     require: true,
   },
-  origen: {
+  foto: {
+    type:String,
+    require: true
+  },
+  categorias: {
+    type: String,
+    require: true
+  },
+  nombreProductos: {
     type: String,
     require: true
   },
   descripcion: {
-    type: String
+    type: String,
+    require: true
+  },
+  barrio: {
+    type: String,
+    require: true
+  },
+  comidas: {
+    type: Array
+  },
+  rating: {
+    type:Number
   },
   user: {
       type: mongo.Schema.Types.ObjectId,
