@@ -8,7 +8,7 @@ const mockData = {}
 
 beforeAll(async () => {
   const users = await User.find({})
-  mockData.users = users
+  mockData.users = users;
 })
 
 describe("Testeango metodo get" , () => {
@@ -16,7 +16,7 @@ describe("Testeango metodo get" , () => {
   it('Sholud return all inf of the BD', async () => {
     const response = await api
                               .get("/api/usuarios")
-                                .expect(200) 
+                                .expect(200)
                                 .set('Accept', 'application/json')
                                 .expect('Content-Type', /json/);
     expect(response.body).toHaveLength(mockData.users.length)
@@ -56,7 +56,7 @@ describe("Test Register endpoint",() => {
           edad: 15,
           dni: "39458716"
       })
-      expect(registerUser).toBeTruthy()
+      expect(registerUser).toBeTruthy();
   })
   it("should be return error " , async () => {
     const registerUser = await api
@@ -86,7 +86,7 @@ describe("Test login endpoint", () => {
     .expect(401)
     .expect("Content-Type" , /application\/json/)
     .send({})
-    expect(login.text).toBe("\"Campo Email obligatorio\"")
+    expect(login.text).toBe("\"Campo Email obligatorio\"");
   })
 
   it("should be return error 404" , async () => {
@@ -98,7 +98,7 @@ describe("Test login endpoint", () => {
       email:"s@gmail.com",
       password:"wwwww"
     })
-    expect(login.text).toBe("Email y/o password invalidos")
+    expect(login.text).toBe("Email y/o password invalidos");
   })
 })
 
