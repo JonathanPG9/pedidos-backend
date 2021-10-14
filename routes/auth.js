@@ -33,6 +33,8 @@ router.post("/login",(req,res,next) => {
     res.status(200).send({
       nombre : usuario.nombre,
       email : usuario.email,
+      telefono : usuario.telefono,
+      apellido : usuario.apellido,
       tiendas : usuario.tiendas,
       userId : usuario.id,
       token
