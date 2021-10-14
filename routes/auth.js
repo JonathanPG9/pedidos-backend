@@ -124,9 +124,9 @@ router.delete("/usuarios/:id",privateRoute,(req,res,next) => {
   const {id} = req.params;
   User.findByIdAndRemove(id)
   .then(userRemoved => {
-    return res.json(userRemoved).end()
+    return res.status(200).json(userRemoved).end()
   })
-  .catch(err => next(err))
+  .catch(err => res.status(404).send("No existe tienda").end())
 })
 
 module.exports = router;

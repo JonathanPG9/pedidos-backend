@@ -3,6 +3,7 @@ const router = Router();
 const Tienda = require('../models/tiendas');
 const User = require("../models/user");
 const privateRoute = require("../middleware/privateRoute");
+const tiendas = require('../models/tiendas');
 
 router.post("/",privateRoute, (req,res) => {
   const nuevaTienda = new Tienda({
@@ -27,6 +28,30 @@ router.post("/",privateRoute, (req,res) => {
   .catch(err => {
     return  res.status(400).send(err).end()
   })
+})
+
+router.get("/:id",(req,res) => {
+  const {id} = req.params
+  User.findById(id).populate('tiendas',{
+    nombre : 1,
+    comidas : 1,
+    nombreProductos: 1,
+    descripcion : 1,
+    barrio : 1,
+    categorias : 1,
+    foto:1,
+  })
+  .then(user => res.status(200).send(user.tiendas))
+  .catch(err => res.status(404).send("Id Invalido"))
+})
+
+router.delete("/:id",(req,res) => {
+  const {id} = req.params;
+  Tienda.findByIdAndRemove(id)
+  .then(tiendaRemovida => {
+    return res.status(200).json(tiendaRemovida).end()
+  })
+  .catch(() => res.status(404).send("No existe tienda").end())
 })
 
 module.exports = router
