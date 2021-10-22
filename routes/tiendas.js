@@ -23,8 +23,9 @@ router.post("/",privateRoute, (req,res) => {
   .then(values => {
     values[0].tiendas = values[0].tiendas.concat(values[1]._id);
     values[0].save();
+    return values[0]
   })
-  .then(() => res.status(200).send("Tienda guardada").end())
+  .then((user) => res.status(200).send(`${user.nombre} se ha guardado la tienda`).end())
   .catch(err => {
     return  res.status(400).send(err).end()
   })
