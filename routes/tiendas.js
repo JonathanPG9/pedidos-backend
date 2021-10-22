@@ -24,7 +24,7 @@ router.post("/",privateRoute, (req,res) => {
     values[0].tiendas = values[0].tiendas.concat(values[1]._id);
     values[0].save();
   })
-  .then(() => res.status(500).send("Guardado").end())
+  .then(() => res.status(200).send("Tienda guardada").end())
   .catch(err => {
     return  res.status(400).send(err).end()
   })
