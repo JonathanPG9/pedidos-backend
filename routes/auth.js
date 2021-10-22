@@ -106,14 +106,14 @@ router.put("/usuarios/:id",async (req,res) => {
   const {id} = req.params;
   const updateUser = {
     nombre: req.body.nombre,
-    password: bcrypt.hashSync(req.body.password,8),
     email: req.body.email,
     apellido: req.body.apellido,
     telefono: req.body.telefono,
   }
   try{
     const updated = await User.findByIdAndUpdate(id,updateUser, {new : true})
-    return res.status(200).send(updated).end() 
+    const {nombre,apellido,email,telefono} = updated;
+    return res.status(200).send({nombre,apellido,email,telefono}).end()
   }
   catch(err) {
     return res.status(404).send("ID invalido").end()
