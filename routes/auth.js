@@ -119,7 +119,20 @@ router.put("/usuarios/:id",async (req,res) => {
     return res.status(404).send("ID invalido").end()
   } 
 })
-
+router.put("/changePassword/:id",async (req,res) => {
+  const {id} = req.params;
+  const hashPassword = bcrypt.hashSync(req.body.password, 8);
+  const updatedPassword = {
+    password : hashPassword
+  };
+  try{
+    const updated = await User.findByIdAndUpdate(id,updatedPassword, {new : true})
+    return res.status(200).send({updated}).end()
+  }
+  catch(err){
+    return res.status(400).send("ID invalido").end()
+  }
+})
 router.delete("/usuarios/:id",privateRoute,(req,res,next) => {
   const {id} = req.params;
   User.findByIdAndRemove(id)
