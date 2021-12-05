@@ -15,7 +15,6 @@ router.post("/",privateRoute, (req,res) => {
     categorias : req.body.categorias,
     foto: req.body.foto
   });
-
   Promise.all([
     User.findById(req.body.userId),
     nuevaTienda.save(),
