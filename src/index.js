@@ -6,7 +6,7 @@ const handleError = require("../middleware/handleError")
 const notFound = require("../middleware/notFound")
 
 app.use(cors({
-  origin: ['https://feltymvp.web.app',"https://jonathanpaniagua.com", "http://localhost:3000","http://localhost:19002/", "http://192.168.100.222",
+  origin: ["http://localhost:3000","http://localhost:19002/", "http://192.168.100.222",
   "exp://127.0.0.1:19000"
 ],
   credentials: true
