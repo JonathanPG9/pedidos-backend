@@ -3,7 +3,7 @@ const router = Router();
 const Tienda = require('../models/tiendas');
 const User = require("../models/user");
 const privateRoute = require("../middleware/privateRoute");
-const tiendas = require('../models/tiendas');
+// const tiendas = require('../models/tiendas');
 
 router.post("/",privateRoute, (req,res) => {
   const nuevaTienda = new Tienda({

@@ -25,8 +25,9 @@ app.use(express.urlencoded({extended: false}))
 
 const auth = require("../routes/auth")
 const tiendas = require("../routes/tiendas")
-
+const meli = require("../routes/mercadopago")
 app.use("/api/",auth)
+app.use("/api/meli",meli)
 app.use("/api/tiendas/",tiendas)
 app.use("*",notFound)
 app.use(handleError)
